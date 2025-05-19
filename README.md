@@ -1,7 +1,5 @@
-# GestaMaxFiori
+# GestaMaxFiori  ->  Aplicativo ABAP RAP para Gestão de Holding
 Aplicativo Hanna Express Trial Edition -> Treinamento de Gestor Holding
-
-# Aplicativo ABAP RAP para Gestão de Holding
 
 ## Visão Geral
 
