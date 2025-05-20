@@ -1,0 +1,5 @@
+CLASS zbp_icnsmm_emp_app DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zicnsmm_emp_app.
+ENDCLASS.
+
+CLASS zbp_icnsmm_emp_app IMPLEMENTATION.
+ENDCLASS.

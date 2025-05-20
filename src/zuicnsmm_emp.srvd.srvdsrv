@@ -1,0 +1,4 @@
+@EndUserText.label: 'UI - Empresas'
+define service ZUICNSMM_EMP {
+  expose ZCCNSMM_EMP;
+}

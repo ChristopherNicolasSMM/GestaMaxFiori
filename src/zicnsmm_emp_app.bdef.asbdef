@@ -1,0 +1,36 @@
+managed implementation in class zbp_icnsmm_emp_app unique;
+strict ( 1 );
+
+
+define behavior for ZICNSMM_EMP_APP alias Emp
+persistent table zcnsmmt_emp
+//draft table ZBCNSMM_EMP_APP
+lock master
+//total etag LocalLastChangedAt
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+
+  mapping for ZCNSMMT_EMP
+  {
+    CompanyName     = company_name;
+    Cnpj            = cnpj;
+    CompanyType     = company_type;
+    Street          = street;
+    HouseNumber     = house_number;
+    Complement      = complement;
+    PostalCode      = postal_code;
+    City            = city;
+    State           = state;
+    Country         = country;
+    PhoneNumber     = phone_number;
+    EmailAddress    = email_address;
+    Website         = website;
+    Currency        = currency;
+    Language        = language;
+
+  }
+}

@@ -1,0 +1,344 @@
+@Metadata.layer: #CUSTOMER
+
+// Anotações de cabeçalho da página de objeto
+@UI : {
+        headerInfo: {
+            typeName: 'Empresa',          // Nome singular da entidade a ser exibido
+            typeNamePlural: 'Empresas',    // Nome plural da entidade a ser exibido
+//            imageUrl: Icon, // Ícone a ser exibido no cabeçalho (opcional)
+            title: { label: 'Empresa', value: 'CompanyName', type: #STANDARD } // Título principal da página, usando o campo 'CompanyName'
+        }
+}
+
+annotate view ZCCNSMM_EMP with
+{
+  @UI.facet: [
+    {   // Facet para a seção de dados gerais da empresa
+        id: 'EmpresaDadosGerais',        // Identificador único do facet
+        purpose : #STANDARD,             // Propósito padrão para exibição na página
+        type: #IDENTIFICATION_REFERENCE, // Tipo de facet para exibir campos de identificação
+        position: 10,                    // Posição de exibição do facet
+        label: 'Dados Gerais',           // Rótulo do facet a ser exibido
+        targetQualifier: 'GeneralInformation' // Qualificador do FieldGroup referenciado por este facet
+    },
+    {   // Facet para a seção de identificação da empresa (CNPJ)
+        id: 'EmpresaIdentificacao',
+        purpose : #STANDARD,
+        type: #IDENTIFICATION_REFERENCE,
+        label: 'Identificação',
+        position: 15,
+        targetQualifier: 'Identification'
+    },
+    {   // Facet para a seção de endereço da empresa
+        id: 'EmpresaEndereco',
+        purpose : #STANDARD,
+        type: #IDENTIFICATION_REFERENCE,
+        label: 'Endereço',
+        position: 20,
+        targetQualifier: 'Address'
+    },
+    {   // Facet para a seção de classificação da empresa (Tipo)
+        id: 'EmpresaClassificacao',
+        purpose : #STANDARD,
+        type: #IDENTIFICATION_REFERENCE,
+        label: 'Classificação',
+        position: 25,
+        targetQualifier: 'Classification'
+    },
+    {   // Facet para a seção de contato da empresa
+        id: 'EmpresaContato',
+        purpose : #STANDARD,
+        type: #IDENTIFICATION_REFERENCE,
+        label: 'Contato',
+        position: 30,
+        targetQualifier: 'Contact'
+    },
+    {   // Facet para outros detalhes da empresa (Moeda, Idioma)
+        id: 'EmpresaOutros',
+        purpose : #STANDARD,
+        type: #IDENTIFICATION_REFERENCE,
+        label: 'Outros Detalhes',
+        position: 40,
+        targetQualifier: 'Details'
+    }
+  ]
+
+  // *** Seção de Dados Gerais ***
+  @UI.fieldGroup: [ // Define um grupo de campos para exibição
+    { qualifier: 'GeneralInformation', // Identificador único do grupo
+      position: 10,                    // Posição de exibição dentro do facet
+      label: 'Código'                   // Rótulo do grupo
+    }
+  ]
+  @UI.lineItem: [ // Define como o campo será exibido na tela de lista
+    { position: 10,                   // Posição na lista
+      importance: #HIGH,             // Prioridade de exibição
+      type: #STANDARD,               // Tipo padrão de exibição
+      label: 'Código'                // Rótulo da coluna na lista
+    }
+  ]
+  @UI.selectionField: [ // Define se o campo pode ser usado como filtro na tela de lista
+    { position: 10 }
+  ]
+  @UI.identification: [ // Define como o campo será exibido na página de objeto (seção principal)
+    { position: 10,                   // Posição na seção
+      label: 'Código'                // Rótulo do campo
+    }
+  ]
+  @EndUserText.label: 'Código'       // Rótulo do campo (usado em formulários, etc.)
+  @Search.defaultSearchElement: true // Indica que este campo deve ser incluído na busca padrão
+  CompanyCode;
+
+  @UI.fieldGroup: [
+    { qualifier: 'GeneralInformation',
+      position: 20,
+      label: 'Nome'
+    }
+  ]
+  @UI.lineItem: [
+    { position: 20,
+      importance: #HIGH,
+      type: #STANDARD,
+      label: 'Nome'
+    }
+  ]
+  @UI.identification: [
+    { position: 20,
+      label: 'Nome'
+    }
+  ]
+  @EndUserText.label: 'Nome'
+  @Search.fuzzinessThreshold: 0.8 // Define um nível de tolerância para a busca aproximada
+  CompanyName;
+
+  // *** Seção de Identificação ***
+  @UI.fieldGroup: [
+    { qualifier: 'Identification',
+      position: 10,
+      label: 'CNPJ'
+    }
+  ]
+  @UI.lineItem: [
+    { position: 30,
+      label: 'CNPJ'
+    }
+  ]
+  @UI.identification: [
+    { position: 30,
+      label: 'CNPJ'
+    }
+  ]
+  @EndUserText.label: 'CNPJ'
+  // Exemplo de anotação de DataPoint (requer um campo de criticality na sua CDS)
+  // @UI.dataPoint: {
+  //   criticality: 'CnpjCriticality',
+  //   criticalityRepresentation: #WITHOUT_ICON
+  // }
+  Cnpj;
+
+  // *** Seção de Classificação ***
+  @UI.fieldGroup: [
+    { qualifier: 'Classification',
+      position: 10,
+      label: 'Tipo'
+    }
+  ]
+  @UI.lineItem: [
+    { position: 40,
+      label: 'Tipo'
+    }
+  ]
+  @UI.identification: [
+    { position: 40,
+      label: 'Tipo'
+    }
+  ]
+  @EndUserText.label: 'Tipo'
+  CompanyType;
+
+  // *** Seção de Endereço ***
+  @UI.fieldGroup: [
+    { qualifier: 'Address',
+      position: 10,
+      label: 'Endereço Completo'
+    }
+  ]
+  @UI.identification: [
+    { position: 50,
+      label: 'Endereço Completo'
+    }
+  ]
+  @EndUserText.label: 'Endereço Completo'
+  @UI.hidden: true // Campo oculto, pois os campos de endereço serão exibidos individualmente
+  fulladdress;
+
+  @UI.fieldGroup: [
+    { qualifier: 'Address',
+      position: 20,
+      label: 'Rua'
+    }
+  ]
+  @UI.identification: [
+    { position: 60,
+      label: 'Rua'
+    }
+  ]
+  @EndUserText.label: 'Rua'
+  Street;
+
+  @UI.fieldGroup: [
+    { qualifier: 'Address',
+      position: 30,
+      label: 'Número'
+    }
+  ]
+  @UI.identification: [
+    { position: 70,
+      label: 'Número'
+    }
+  ]
+  @EndUserText.label: 'Número'
+  HouseNumber;
+
+  @UI.fieldGroup: [
+    { qualifier: 'Address',
+      position: 40,
+      label: 'Complemento'
+    }
+  ]
+  @UI.identification: [
+    { position: 80,
+      label: 'Complemento'
+    }
+  ]
+  @EndUserText.label: 'Complemento'
+  Complement;
+
+  @UI.fieldGroup: [
+    { qualifier: 'Address',
+      position: 50,
+      label: 'CEP'
+    }
+  ]
+  @UI.identification: [
+    { position: 90,
+      label: 'CEP'
+    }
+  ]
+  @EndUserText.label: 'CEP'
+  PostalCode;
+
+  @UI.fieldGroup: [
+    { qualifier: 'Address',
+      position: 60,
+      label: 'Cidade'
+    }
+  ]
+  @UI.identification: [
+    { position: 100,
+      label: 'Cidade'
+    }
+  ]
+  @EndUserText.label: 'Cidade'
+  City;
+
+  @UI.fieldGroup: [
+    { qualifier: 'Address',
+      position: 70,
+      label: 'Estado'
+    }
+  ]
+  @UI.identification: [
+    { position: 110,
+      label: 'Estado'
+    }
+  ]
+  @EndUserText.label: 'Estado'
+  State;
+
+  @UI.fieldGroup: [
+    { qualifier: 'Address',
+      position: 80,
+      label: 'País'
+    }
+  ]
+  @UI.identification: [
+    { position: 120,
+      label: 'País'
+    }
+  ]
+  @EndUserText.label: 'País'
+  Country;
+
+  // *** Seção de Contato ***
+  @UI.fieldGroup: [
+    { qualifier: 'Contact',
+      position: 10,
+      label: 'Telefone'
+    }
+  ]
+  @UI.identification: [
+    { position: 130,
+      label: 'Telefone'
+    }
+  ]
+  @EndUserText.label: 'Telefone'
+  PhoneNumber;
+
+  @UI.fieldGroup: [
+    { qualifier: 'Contact',
+      position: 20,
+      label: 'E-mail'
+    }
+  ]
+  @UI.identification: [
+    { position: 140,
+      label: 'E-mail'
+    }
+  ]
+  @EndUserText.label: 'E-mail'
+  EmailAddress;
+
+  @UI.fieldGroup: [
+    { qualifier: 'Contact',
+      position: 30,
+      label: 'Website'
+    }
+  ]
+  @UI.identification: [
+    { position: 150,
+      label: 'Website'
+    }
+  ]
+  @EndUserText.label: 'Website'
+  Website;
+
+  // *** Seção de Outros Detalhes ***
+  @UI.fieldGroup: [
+    { qualifier: 'Details',
+      position: 10,
+      label: 'Moeda'
+    }
+  ]
+  @UI.identification: [
+    { position: 160,
+      label: 'Moeda'
+    }
+  ]
+  @EndUserText.label: 'Moeda'
+  Currency;
+
+  @UI.fieldGroup: [
+    { qualifier: 'Details',
+      position: 20,
+      label: 'Idioma'
+    }
+  ]
+  @UI.identification: [
+    { position: 170,
+      label: 'Idioma'
+    }
+  ]
+  @EndUserText.label: 'Idioma'
+  Language;
+}
